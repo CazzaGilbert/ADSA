@@ -1,16 +1,16 @@
 import sys
 
-class AVLNode:
+class Node: #leaves
     def __init__(self, key):
         self.key = key
         self.left = None
         self.right = None
         self.height = 1
 
-class AVLTree:
+class Tree: #stump
     def insert(self, root, key):
         if not root:
-            return AVLNode(key)
+            return Node(key)
         elif key < root.key:
             root.left = self.insert(root.left, key)
         elif key > root.key:
@@ -148,7 +148,7 @@ class AVLTree:
 
 if __name__ == "__main__":
     # create empty AVL tree
-    Tree = AVLTree()
+    AVL = Tree()
     root = None
 
     # get user input  
@@ -160,21 +160,21 @@ if __name__ == "__main__":
         # insert
         if command.startswith('A'):
             value = int(command[1:])
-            root = Tree.insert(root, value)
+            root = AVL.insert(root, value)
         #delete
         elif command.startswith('D'):
             value = int(command[1:])
-            root = Tree.delete(root, value)
+            root = AVL.delete(root, value)
                
     #get output
     finishing_move = commands[-1]
     # if tree not empty
     if root:
         if finishing_move == 'PRE':
-            print(' '.join(map(str, Tree.pre_order(root))))
+            print(' '.join(map(str, AVL.pre_order(root))))
         elif finishing_move == 'IN':
-            print(' '.join(map(str, Tree.in_order(root))))
+            print(' '.join(map(str, AVL.in_order(root))))
         elif finishing_move == 'POST':
-            print(' '.join(map(str, Tree.post_order(root))))
+            print(' '.join(map(str, AVL.post_order(root))))
     else: # if tree empty
         print("EMPTY")

@@ -8,7 +8,7 @@ class Node: #leaves
         self.height = 1
 
 class Tree: #stump
-    def insert(self, root, key):
+    def insert(self, root, key): # add leaf
         if not root:
             return Node(key)
         elif key < root.key:
@@ -40,7 +40,7 @@ class Tree: #stump
 
         return root
 
-    def delete(self, root, key):
+    def delete(self, root, key): # remove leaf
         if not root:
             return root
 
@@ -81,46 +81,46 @@ class Tree: #stump
 
         return root
 
-    def left_rotate(self, z):
-        y = z.right
-        T2 = y.left
+    def left_rotate(self, root): # rotate left
+        leaf = root.right
+        temp = leaf.left
 
-        y.left = z
-        z.right = T2
+        leaf.left = root
+        root.right = temp
 
-        z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
-        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
+        leaf.height = 1 + max(self.get_height(leaf.left), self.get_height(leaf.right))
 
-        return y
+        return leaf
 
-    def right_rotate(self, z):
-        y = z.left
-        T3 = y.right
+    def right_rotate(self, root): #rotate right
+        leaf = root.left
+        temp = leaf.right
 
-        y.right = z
-        z.left = T3
+        leaf.right = root
+        root.left = temp
 
-        z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
-        y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
+        root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
+        leaf.height = 1 + max(self.get_height(leaf.left), self.get_height(leaf.right))
 
-        return y
+        return leaf
 
-    def get_height(self, root):
+    def get_height(self, root): # get height
         if not root:
             return 0
         return root.height
 
-    def get_balance(self, root):
+    def get_balance(self, root): # check balance
         if not root:
             return 0
         return self.get_height(root.left) - self.get_height(root.right)
 
-    def get_min_value_node(self, root):
+    def get_min_value_node(self, root): # get smallest leaf
         if root is None or root.left is None:
             return root
         return self.get_min_value_node(root.left)
 
-    def pre_order(self, root):
+    def pre_order(self, root):# pre-order traversal
         res = []
         if root:
             res.append(root.key)
@@ -128,7 +128,7 @@ class Tree: #stump
             res.extend(self.pre_order(root.right))
         return res
 
-    def in_order(self, root):
+    def in_order(self, root): # in-order traversal
         res = []
         if root:
             res.extend(self.in_order(root.left))
@@ -136,7 +136,7 @@ class Tree: #stump
             res.extend(self.in_order(root.right))
         return res
 
-    def post_order(self, root):
+    def post_order(self, root):  # post-order traversal
         res = []
         if root:
             res.extend(self.post_order(root.left))

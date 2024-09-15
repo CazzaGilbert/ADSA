@@ -49,14 +49,20 @@ class Tree: #stump
         elif key > root.key:
             root.right = self.delete(root.right, key)
         else:
-            if not root.left:
+            if not root.left and not root.right:
+                # Node with only one child or no child
+                return None
+            elif not root.left:
+                # Node with only right child
                 return root.right
             elif not root.right:
+                # Node with only left child
                 return root.left
-
-            temp = self.get_min_value_node(root.right)
-            root.key = temp.key
-            root.right = self.delete(root.right, temp.key)
+            else:
+                # Node with two children: Get the in-order predecessor (largest in the left subtree)
+                predecessor = self.get_max(root.left)
+                root.key = predecessor.key
+                root.left = self.delete(root.left, predecessor.key)
 
         if not root:
             return root
@@ -115,10 +121,13 @@ class Tree: #stump
             return 0
         return self.get_height(root.left) - self.get_height(root.right)
 
-    def get_min_value_node(self, root): # get smallest leaf
-        if root is None or root.left is None:
-            return root
-        return self.get_min_value_node(root.left)
+    def get_max(self, root): # get max value node
+        if not root:
+            return None
+        current = root
+        while current.right:
+            current = current.right
+        return current
 
     def pre_order(self, root):# pre-order traversal
         res = []

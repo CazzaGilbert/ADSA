@@ -32,7 +32,7 @@ def construction(country, build, destroy): # design, build and remove roads
             component[path] = find(component[path])
         return component[path]
     
-    def link(path1, path2): # link the cities together
+    def union(path1, path2): # link the cities together
         root1 = find(path1)
         root2 = find(path2)
         if root1 != root2: # if different combine
@@ -71,7 +71,7 @@ def construction(country, build, destroy): # design, build and remove roads
     for i in range(num_links): 
         for j in range(i + 1, num_links):
             min_build = float('inf')
-            for c1 in connections[i]:
+            for c1 in connections[i]:   
                 for c2 in connections[j]:
                     min_build = min(min_build, build[c1][c2])
             cost_build.append((min_build, i, j))
@@ -82,7 +82,7 @@ def construction(country, build, destroy): # design, build and remove roads
     for cost, city1, city2 in cost_build: # add cheaper build
         if find(city1) != find(city2):
             total_cost += cost
-            link(city1, city2)
+            union(city1, city2)
 
     return total_cost # return min cost
 
